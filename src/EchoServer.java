@@ -16,13 +16,16 @@ public class EchoServer {
             System.out.println("연결되었습니다.");
 
             in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // 클라이언트로부터의 입력 스트림
-            String inputMessage;
-            while ((inputMessage = in.readLine()) != null) {
-                System.out.println("주문된 메뉴: "+ inputMessage); // 클라이언트가 보낸 메시지 화면에 출력
-                if (inputMessage.equals("끝")) { // 클라이언트가 "끝"를 보내면 연결 종료
-                    System.out.println("접속을 종료합니다.");
-                    break;
+            while (true) {
+                String inputMessage = in.readLine();
+                if (inputMessage != null) {
+                    if (inputMessage.equals("끝")) { // 클라이언트가 "끝"를 보내면 연결 종료
+                        System.out.println("접속을 종료합니다.");
+                        break;
+                    }
+                    else  System.out.println("주문된 메뉴: " + inputMessage); // 클라이언트가 보낸 메시지 화면에 출력
                 }
+                inputMessage = null;
             }
             socket.close(); // 클라이언트와 통신용 소켓 닫기
             listener.close(); // 서버 소켓 닫기

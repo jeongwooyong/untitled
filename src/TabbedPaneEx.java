@@ -36,10 +36,6 @@ public class TabbedPaneEx extends JFrame {
                     BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())); // 서버로의 출력 스트림
                     out.write(text + "\n"); // 서버로 보냄
                     out.flush();
-                    if (text.equals("끝")) { // "끝"을 입력받으면 소켓을 닫음
-                        socket.close();
-                    }
-
                 } catch (UnknownHostException ex) {
                     ex.printStackTrace();
                 } catch (IOException ex) {
@@ -59,10 +55,25 @@ public class TabbedPaneEx extends JFrame {
                     BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())); // 서버로의 출력 스트림
                     out.write(text + "\n"); // 서버로 보냄
                     out.flush();
-                    if (text.equals("끝")) { // "끝"을 입력받으면 소켓을 닫음
-                        socket.close();
-                    }
+                } catch (UnknownHostException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
 
+
+            }
+
+        });
+        p9.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                String text = "끝"; // 버튼이 클릭되면 제육
+                try {
+                    Socket socket = new Socket("localhost", 9999); // 서버에 연결하는 소켓 생성
+                    BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())); // 서버로의 출력 스트림
+                    out.write(text + "\n"); // 서버로 보냄
+                    out.flush();
                 } catch (UnknownHostException ex) {
                     ex.printStackTrace();
                 } catch (IOException ex) {
