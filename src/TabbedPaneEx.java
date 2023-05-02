@@ -26,6 +26,7 @@ public class TabbedPaneEx extends JFrame {
         JButton p8 = new JButton("메뉴 8");
         JButton p9 = new JButton("메뉴 9");
 
+
         p1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
