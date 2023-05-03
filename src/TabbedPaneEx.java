@@ -2,6 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -71,10 +76,41 @@ public class TabbedPaneEx extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         // 해당 버튼이 속한 JPanel에서 가격 정보 가져오기
                         count[0]++;
-                        System.out.println("주문한 메뉴: " + price.get(key) +" "+ count[0] + " 개");
+                        String text = "주문한 메뉴: " + price.get(key) +" "+ count[0] + " 개";
+                        //소켓을 연결하기는 했지만 다음 추가는 잘 안됨.
+                        //장바구니에서 추가해서 소켓을 보내야하지만
+                        //아직은 되지 않음
+                        try {
+                            Socket socket = new Socket("localhost", 9999); // 서버에 연결하는 소켓 생성
+                            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())); // 서버로의 출력 스트림
+                            out.write(text + "\n"); // 서버로 보냄
+                            out.flush();
+                        } catch (UnknownHostException ex) {
+                            ex.printStackTrace();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
 
                     }
                 });
+                /*
+                public void actionPerformed(ActionEvent e) { // JTextField에 <Enter> 키 처리
+                    if (e.getSource() == sender) {
+                        String msg = sender.getText(); // 텍스트 필드에 사용자가 입력한 문자열
+                        try {
+                         out.write(msg+"\n"); // 문자열 전송
+                         out.flush();
+
+                         receiver.append("\n클라이언트 : " + msg); // JTextArea에 출력
+                         int pos = receiver.getText().length();
+                         receiver.setCaretPosition(pos); // caret 포지션을 가장 마지막으로 이동
+                         sender.setText(null); // 입력창의 문자열 지움
+                        } catch (IOException e1) {
+                         handleError(e1.getMessage());
+                        }
+                  }
+                  }
+                 */
 
 
                     minus[i][j] = new JButton("-");
