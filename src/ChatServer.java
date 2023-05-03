@@ -32,6 +32,7 @@ public class ChatServer extends JFrame implements ActionListener {
         setSize(400, 200); // 폭 400 픽셀, 높이 200 픽셀의 크기로 프레임 크기 설정
         setVisible(true); // 프레임이 화면에 나타나도록 설정
 
+
         try {
             setupConnection();
         } catch (IOException e) {

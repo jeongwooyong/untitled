@@ -57,6 +57,7 @@ public class TabbedPaneEx extends JFrame {
         Set<String> keys = price.keySet();
         Iterator<String> it = keys.iterator();
 
+
         for(int i=0; i<numRows; i++) {
             for (int j = 0; j < numCols; j++) {
                 p[i][j] = new JPanel();

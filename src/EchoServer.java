@@ -34,6 +34,7 @@ public class EchoServer extends JFrame {
             handleError(e.getMessage());
         }
 
+
         Thread th = new Thread(receiver); // 상대로부터 메시지 수신을 위한 스레드 생성
         th.start();
     }
