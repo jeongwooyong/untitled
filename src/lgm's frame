@@ -82,15 +82,18 @@ public class TabbedPaneEx extends JFrame implements ActionListener {
         orderb = new JButton("주문하기");
         // 장바구니 탭안에 주문하기 버튼 생성
         buy.add(orderb);
-        
+
+        // 장바구니 탭안에 X 버튼 누를 시
         cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 buy.remove(bp); // 장바구니 탭에 panel삭제
                 buy.revalidate(); // 프레임을 다시 그리도록 revalidate() 메서드를 호출합니다.
                 buy.repaint();
+                // X버튼 누를 시 패널안에 있는 라벨은 초기화가 되지 않음
             }
         });
+        // 장바구니 탭안에 있는 주문하기 버튼 누를 시
         orderb.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -103,24 +106,25 @@ public class TabbedPaneEx extends JFrame implements ActionListener {
                 p[i][j] = new JPanel(); // 각 인기메뉴의 패널들
                 l[i][j] = new JLabel(text[i][j]); // 각 인기메뉴의 메뉴이름
                 pl[i][j] = new JLabel(price[i][j]); // 각 인기메뉴의 개수
-                number[i][j] = new JLabel(num[i][j]); //각 메뉴들의 개수 
+                number[i][j] = new JLabel(num[i][j]); //각 메뉴들의 개수
                 plus[i][j] = new JButton("+"); // 각 패널에 개수 증가버튼
                 minus[i][j] = new JButton("-"); // 각 패널에 개수 감소버튼
                 basket[i][j] = new JButton("장바구니에 담기"); // 각 패널에 장바구니에 담기 버튼
-                plus[i][j].addActionListener(this);
-                minus[i][j].addActionListener(this);
-                basket[i][j].addActionListener(this);
-                popular.add(p[i][j]);
-                p[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                p[i][j].setLayout(new FlowLayout(FlowLayout.CENTER));
-                p[i][j].add(plus[i][j]);
+                plus[i][j].addActionListener(this); // 인기메뉴의 각 패널들의 + 버튼 동작
+                minus[i][j].addActionListener(this); // 인기메뉴의 각 패널들의 - 버튼 동작
+                basket[i][j].addActionListener(this); // 인기메뉴의 각 패널들의 장바구니에 담기 버튼 동작
+                popular.add(p[i][j]); // 인기메뉴 탭패널 안에 9개의 메뉴들의 패널 삽입
+                p[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK)); // 9개의 메뉴들에 검은색 테두리 생성
+                p[i][j].setLayout(new FlowLayout(FlowLayout.CENTER)); // +버튼, 개수라벨, -버튼, 장바구니에 담기를
+                p[i][j].add(plus[i][j]);                              // FlowLayout으로 정렬
                 p[i][j].add(number[i][j]);
                 p[i][j].add(minus[i][j]);
                 p[i][j].add(basket[i][j]);
-                p[i][j].add(pl[i][j]);
-                p[i][j].add(l[i][j]);
+                p[i][j].add(pl[i][j]); // 가격 라벨 생성
+                p[i][j].add(l[i][j]); // 메뉴이름 라벨 생성
             }
         }
+        // 면메뉴 보류
         JPanel myon = new JPanel();
         myon.add(new JButton("메뉴 1"));
         myon.add(new JButton("메뉴 2"));
@@ -129,19 +133,24 @@ public class TabbedPaneEx extends JFrame implements ActionListener {
         myon.add(new JButton("메뉴 5"));
         myon.add(new JButton("메뉴 6"));
 
+        // 밥류 보류
         JPanel rice = new JPanel();
         rice.add(new JButton("메뉴 1"));
         rice.add(new JButton("메뉴 2"));
         rice.add(new JButton("메뉴 3"));
 
+        // 주문내역 해야함
+        // 장바구니탭에서 주문하기 버튼 클릭 시
+        // 주문내역에서 timer스레드 5분 설정하고 5분안에 주문취소 할 수 있게 설정, 5분이 지나가면 주문취소 불가능--> 직원에게 문의 텍스트 뛰우기
         JPanel order = new JPanel();
         order.add(new JButton("주문내역"));
 
+        // 계산서 해야함
         JPanel bill = new JPanel();
         bill.add(new JButton("주문내역"));
 
 
-
+        //탭메뉴들 추가
         pane.addTab("인기 메뉴", popular);
         pane.addTab("면 류", myon);
         pane.addTab("밥 류",rice);
@@ -154,6 +163,10 @@ public class TabbedPaneEx extends JFrame implements ActionListener {
         setSize(1200, 800);
         setVisible(true);
     }
+    // 인기메뉴의 각 메뉴들의 +, -, 장바구니에 담기 버튼 클릭 시 동작하는 것
+    // 아직 장바구니에 첫번째 메뉴의 1개 장바구니에 담은 것만 장바구니 탭에 패널 띄우는 것 까지함
+    // 각 메뉴들의 +, - 클릭 시 +와 - 사이에 개수가 변함
+    // 장바구니에 담기 클릭 시 장바구니탭에 주문할 메뉴가 추가됌
     @Override
     public void actionPerformed(ActionEvent e) {
         // i = 0이면 라벨에 1이 출력, i = 8이면 라벨에 9출력
