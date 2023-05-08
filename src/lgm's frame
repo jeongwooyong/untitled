@@ -44,7 +44,7 @@ public class TabbedPaneEx extends JFrame implements ActionListener {
         sum = new int[9];
 
         int[] index = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-        int[] pi = {9000,8000,7000,6000,5000,4000,3000,2000,1000};
+        int[] pi = {9000, 8000, 7000, 6000, 5000, 4000, 3000, 2000, 1000};
 
         //버튼 배열 생성
         p = new JPanel[numRows][numCols];
@@ -68,10 +68,10 @@ public class TabbedPaneEx extends JFrame implements ActionListener {
         // 인기메뉴의 각 이름
         String[][] text = {{"제육","쭈구미볶음","간장게장"},{"육회","비빕맙","쫄면"},{"육회","비빕맙","쫄면"}};
         // 인기메뉴의 가격
-        String[][] price = {{ pi[0]+ "won" ,pi[1]+ "won",pi[2]+ "won"},
-            { pi[3]+ "won",pi[4]+ "won",pi[5]+ "won"},{pi[6]+ "won",pi[7]+ "won",pi[8]+ "won"}};
+        String[][] price = {{ pi[0]+ "won", pi[1]+ "won", pi[2]+ "won"},
+            { pi[3]+ "won", pi[4]+ "won", pi[5]+ "won"},{pi[6]+ "won", pi[7]+ "won", pi[8]+ "won"}};
         // 인기메뉴의 +, - 버튼 누를 시 개수 증가 및 감소
-        String[][] num = {{"1","2","3"},{"4","5","6"},{"7","8","9"}};
+        String[][] num = {{"1","1","1"},{"1","1","1"},{"1","1","1"}};
         // 장바구니에 표시될 총 가격
         String[][] sump = {{sum[0]+"won",sum[1]+"won",sum[2]+"won"},{sum[3]+"won",sum[4]+"won",sum[5]+"won"},
                 {sum[6]+"won",sum[7]+"won",sum[8]+"won"}};
@@ -87,10 +87,13 @@ public class TabbedPaneEx extends JFrame implements ActionListener {
         cancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                bp.remove(st);
+                bp.remove(mn);
+                bp.remove(bpl);
                 buy.remove(bp); // 장바구니 탭에 panel삭제
                 buy.revalidate(); // 프레임을 다시 그리도록 revalidate() 메서드를 호출합니다.
                 buy.repaint();
-                // X버튼 누를 시 패널안에 있는 라벨은 초기화가 되지 않음
+                // 장바구니에 담기 버튼 계속 누를 시 라벨이 계속 추가됌 한 패널안에
             }
         });
         // 장바구니 탭안에 있는 주문하기 버튼 누를 시
@@ -230,9 +233,9 @@ public class TabbedPaneEx extends JFrame implements ActionListener {
                 //st 메뉴 이름 라벨
                 st = new JLabel("제육볶음");
                 //개수 라벨 menu number
-                mn = new JLabel(String.valueOf(index[0]+1));
-                // 총 가격 라벨
-                bpl = new JLabel(sum[0] + "won");
+                mn = new JLabel(String.valueOf(index[0]+1) + "개");
+                // 메뉴 가격 라벨 (숫자가 안나옴)
+                bpl = new JLabel(pi[0] + "won");
             }
             buy.add(bp);
             bp.add(cancel);
