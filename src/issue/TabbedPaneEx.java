@@ -1,9 +1,12 @@
+package issue;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.IOException;
+
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -71,8 +74,26 @@ public class TabbedPaneEx extends JFrame {
                 //교과서 233p
                 //
                 //
-
-                plus[i][j].addActionListener(new ActionListener() {
+                /*
+                public void actionPerformed(ActionEvent e) { // JTextField에 <Enter> 키 처리
+                    if (e.getSource() == sender) {
+                        String msg = sender.getText(); // 텍스트 필드에 사용자가 입력한 문자열
+                        try {
+                         out.write(msg+"\n"); // 문자열 전송
+                         out.flush();
+                         receiver.append("\n클라이언트 : " + msg); // JTextArea에 출력
+                         int pos = receiver.getText().length();
+                         receiver.setCaretPosition(pos); // caret 포지션을 가장 마지막으로 이동
+                         sender.setText(null); // 입력창의 문자열 지움
+                        } catch (IOException e1) {
+                         handleError(e1.getMessage());
+                        }
+                  }
+                  }
+                 */
+                minus[i][j] = new JButton("-");
+                basket[i][j] = new JButton("장바구니");
+                basket[i][j].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // 해당 버튼이 속한 JPanel에서 가격 정보 가져오기
@@ -94,28 +115,6 @@ public class TabbedPaneEx extends JFrame {
 
                     }
                 });
-                /*
-                public void actionPerformed(ActionEvent e) { // JTextField에 <Enter> 키 처리
-                    if (e.getSource() == sender) {
-                        String msg = sender.getText(); // 텍스트 필드에 사용자가 입력한 문자열
-                        try {
-                         out.write(msg+"\n"); // 문자열 전송
-                         out.flush();
-
-                         receiver.append("\n클라이언트 : " + msg); // JTextArea에 출력
-                         int pos = receiver.getText().length();
-                         receiver.setCaretPosition(pos); // caret 포지션을 가장 마지막으로 이동
-                         sender.setText(null); // 입력창의 문자열 지움
-                        } catch (IOException e1) {
-                         handleError(e1.getMessage());
-                        }
-                  }
-                  }
-                 */
-
-
-                    minus[i][j] = new JButton("-");
-                basket[i][j] = new JButton("장바구니");
                 popular.add(p[i][j]);
                 p[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 p[i][j].setLayout(new FlowLayout(FlowLayout.CENTER));
