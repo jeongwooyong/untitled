@@ -1,4 +1,4 @@
-package issue;
+package zzz;
 
 import javax.swing.*;
 import java.awt.*;

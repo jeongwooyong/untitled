@@ -1,4 +1,4 @@
-package example;
+package zzz;
 
 import java.awt.BorderLayout;
 import java.awt.Container;

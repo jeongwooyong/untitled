@@ -1,4 +1,4 @@
-package example;
+package zzz;
 
 import java.awt.*;
 import java.awt.event.*;

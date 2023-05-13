@@ -7,8 +7,17 @@ import java.awt.event.ActionListener;
 
 
 class orderEX extends Thread {
+    private static int num;
+
     public void run() {
-        new TabbedPaneEx();
+        new TabbedTable();
+    }
+
+    public void setCount(int num) {
+        this.num =num;
+    }
+    public static int getCount(){
+        return num;
     }
 }
 
@@ -18,6 +27,8 @@ public class Table extends JFrame implements ActionListener {
     private orderEX th3;
     private orderEX th4;
     private orderEX th5;
+    private int num;
+
 
     public Table() {
         setTitle("Table Setting");
@@ -59,26 +70,31 @@ public class Table extends JFrame implements ActionListener {
         if (button.getText().equals("Table 1")) {
             if (th1 == null) {
                 th1 = new orderEX();
+                th1.setCount(1);
                 th1.start();
             }
         } else if (button.getText().equals("Table 2")) {
             if (th2 == null) {
                 th2 = new orderEX();
+                th2.setCount(2);
                 th2.start();
             }
         } else if (button.getText().equals("Table 3")) {
             if (th3 == null) {
                 th3 = new orderEX();
+                th3.setCount(3);
                 th3.start();
             }
         } else if (button.getText().equals("Table 4")) {
             if (th4 == null) {
                 th4 = new orderEX();
+                th4.setCount(4);
                 th4.start();
             }
         } else if (button.getText().equals("Table 5")) {
             if (th5 == null) {
                 th5 = new orderEX();
+                th5.setCount(5);
                 th5.start();
             }
         }
