@@ -1,6 +1,6 @@
-package example;
+package kr.mjc.lgm.morder.exam;
 
-import zzz.ChatClient;
+import kr.mjc.lgm.morder.zzz.ChatClient;
 
 import javax.sound.midi.Receiver;
 import javax.swing.*;
@@ -29,12 +29,14 @@ public class TabbedTable extends JFrame implements ActionListener {
     private JTabbedPane pane = new JTabbedPane(JTabbedPane.LEFT);
     private JTabbedPane text = new JTabbedPane(JTabbedPane.RIGHT);
     private JTextArea basketText = new JTextArea();
+    private JTextArea orderText = new JTextArea();
+    private JTextArea billText = new JTextArea();
 
     // 인기메뉴에 해당하는 Panel
     private JPanel popular = new JPanel();
     private JPanel[][] p;
     private JButton[][] plus, minus, basket;
-    private JButton getbasket,canclebasket,total;
+    private JButton getbasket,canclebasket,total, cancleorder;
     private JLabel[][] lWon,lmenu, count1;
     public int number = orderEX.getCount();
     public TabbedTable() {
@@ -69,6 +71,7 @@ public class TabbedTable extends JFrame implements ActionListener {
         getbasket = new JButton("주문하기");
         canclebasket = new JButton("취소");
         total = new JButton("총 금액 표시");
+        cancleorder = new JButton("주문취소");
 
 
         HashMap<String,String> price = new HashMap<String,String>();
@@ -185,7 +188,7 @@ public class TabbedTable extends JFrame implements ActionListener {
         canclebasket.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                basketText.setText("테이블 번호 " + number + "\n\n");
+                basketText.setText("테이블 번호 " + number + "\n");
             }
         });
 
@@ -198,12 +201,34 @@ public class TabbedTable extends JFrame implements ActionListener {
         Thread th = new Thread(receiver); // 상대로부터 메시지 수신을 위한 스레드 생성
         th.start();
 
+        //주문내역
+        JPanel order = new JPanel();
+        order.add(new JScrollPane(orderText));
+        order.add(cancleorder);
 
+        //주문취소 버튼 누를 시 동작
+        cancleorder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //주문내역 텍스트필드 비우기
+                orderText.setText("");
+                //주문내역 소켓으로 취소 보내야함
+
+                //계산서 텍스트필드 비우기
+                billText.setText("");
+            }
+        });
+
+        //계산서
+        JPanel bill = new JPanel();
+        bill.add(new JScrollPane(billText));
 
         // private JTabbedPane pane = new JTabbedPane(JTabbedPane.LEFT);
         // BorderLayout의 왼쪽에 추가.
         pane.addTab("인기 메뉴", popular);
         pane.add("장바구니", buy);
+        pane.add("주문내역", order);
+        pane.add("계산서", bill);
         add(pane, BorderLayout.WEST);
         add(text, BorderLayout.EAST);
 
@@ -249,6 +274,8 @@ public class TabbedTable extends JFrame implements ActionListener {
         else if (e.getSource() == getbasket) {
             String call = basketText.getText(); // 텍스트 필드에 사용자가 입력한 문자열
             try {
+                orderText.setText(call);
+                billText.setText(call);
                 out.write(call+"\n"); // 문자열 전송
                 out.flush();
 
@@ -273,4 +300,3 @@ public class TabbedTable extends JFrame implements ActionListener {
         new TabbedTable();
     }
 }
-
